@@ -2,6 +2,8 @@
 
 Proyek machine learning end-to-end yang terdiri dari dua tahap: **Clustering** (unsupervised) untuk melakukan segmentasi nasabah bank berdasarkan pola transaksi, dan **Klasifikasi** (supervised) untuk mempelajari serta memprediksi segmen tersebut dari data baru.
 
+🔗 **Aplikasi live:** [customer-segmentation-classification.streamlit.app](https://customer-segmentation-classification.streamlit.app)
+
 ## Deskripsi Proyek
 
 Dataset berisi data transaksi perbankan tanpa label yang mencakup informasi transaksi (jumlah, tipe, durasi, channel), profil nasabah (usia, pekerjaan), dan saldo akun. Karena tidak ada label segmen yang tersedia, proyek ini pertama-tama membangun label segmen sendiri menggunakan **K-Means Clustering**, lalu label hasil clustering tersebut dipakai sebagai target untuk melatih model **klasifikasi** (Random Forest & Decision Tree) — sehingga segmen nasabah baru dapat diprediksi tanpa perlu menjalankan ulang proses clustering dari awal.
@@ -78,39 +80,17 @@ pip install -r requirements.txt
 
 ## Deploy ke Streamlit
 
-Proyek ini juga dilengkapi aplikasi web sederhana (`app.py`) yang memprediksi segmen nasabah dari input transaksi baru secara real-time, memakai model klasifikasi terbaik (Random Forest atau Decision Tree, dipilih otomatis berdasarkan akurasi tertinggi).
+Aplikasi web-nya sudah live di **[customer-segmentation-classification.streamlit.app](https://customer-segmentation-classification.streamlit.app)** — siapa pun bisa langsung mencoba tanpa perlu install apa pun.
 
-**File tambahan untuk deployment:**
-- `train_export.py` — menjalankan ulang pipeline preprocessing → clustering → klasifikasi, lalu menyimpan seluruh model/scaler/encoder ke folder `artifacts/` (format `.pkl` via `joblib`) plus `metadata.json` (profil tiap cluster, nama & akurasi model terpilih)
-- `app.py` — aplikasi Streamlit yang membaca `artifacts/` dan menyediakan form input untuk memprediksi cluster nasabah baru, lengkap dengan probabilitas prediksi dan perbandingan ke profil rata-rata segmen
+Aplikasi ini (`app.py`) memprediksi segmen nasabah dari input transaksi baru secara real-time, dengan UI yang dirancang untuk orang awam (bahasa sederhana, slider dengan rentang wajar, contoh cepat, dan hasil dijelaskan dalam kalimat biasa, bukan istilah statistik). Model yang dipakai adalah model klasifikasi terbaik (Random Forest atau Decision Tree, dipilih otomatis berdasarkan akurasi tertinggi).
 
-**Langkah deploy:**
 
-1. **Generate artifacts (sekali di awal, atau setiap dataset berubah):**
-   ```bash
-   python train_export.py
-   ```
-   Ini akan membuat folder `artifacts/` berisi `scaler.pkl`, `clf_scaler.pkl`, `label_encoders.pkl`, `kmeans_model.pkl`, `classifier_model.pkl`, `feature_cols.pkl`, dan `metadata.json`.
-
-2. **Jalankan lokal untuk cek:**
-   ```bash
-   streamlit run app.py
-   ```
-   Buka `http://localhost:8501` di browser.
-
-3. **Deploy ke Streamlit Community Cloud (gratis):**
-   - Push seluruh folder proyek (termasuk `app.py`, `requirements.txt`, `train_export.py`, `bank_transactions_data_2.csv`) ke repo GitHub — folder `artifacts/` bisa ikut di-push, atau dibuat otomatis saat startup dengan menambahkan pemanggilan `train_export.py` di awal `app.py`
-   - Buka [share.streamlit.io](https://share.streamlit.io), hubungkan ke repo GitHub tersebut
-   - Pilih `app.py` sebagai entry point, deploy
-   - Streamlit Cloud otomatis membaca `requirements.txt` untuk install dependencies
-
-4. **Alternatif deploy lain:** Hugging Face Spaces (pilih SDK "Streamlit"), atau Docker + Railway/Render kalau butuh kontrol lebih (tinggal tambahkan `Dockerfile` sederhana dengan base image `python:3.11-slim` + `pip install -r requirements.txt` + `CMD ["streamlit","run","app.py"]`).
 
 **Fitur app.py:**
-- Form input 8 fitur transaksi (jumlah, usia, durasi, login attempts, saldo, tipe transaksi, channel, pekerjaan)
-- Prediksi segmen (Cluster 0–3) beserta nama deskriptifnya
-- Grafik probabilitas prediksi per cluster
-- Tabel perbandingan ke karakteristik rata-rata segmen tersebut
+- Form input 8 fitur transaksi (jumlah, usia, durasi, login attempts, saldo, tipe transaksi, channel, dan pekerjaan sebagai teks bebas)
+- Tombol "contoh cepat" untuk mengisi form otomatis tanpa perlu mengetik
+- Hasil prediksi ditampilkan sebagai kartu bernama & berwarna (bukan angka "Cluster 0-3"), lengkap dengan penjelasan dan saran tindakan
+- Detail teknis (tabel probabilitas, akurasi model) disembunyikan di bagian "untuk yang penasaran" agar tidak membingungkan pengguna awam
 
 ## Catatan
 
