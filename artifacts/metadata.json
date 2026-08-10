@@ -1,0 +1,72 @@
+{
+  "optimal_k": 4,
+  "feature_cols": [
+    "TransactionAmount",
+    "CustomerAge",
+    "TransactionDuration",
+    "LoginAttempts",
+    "AccountBalance",
+    "TransactionType_encoded",
+    "Channel_encoded",
+    "CustomerOccupation_encoded"
+  ],
+  "categorical_cols": [
+    "TransactionType",
+    "Channel",
+    "CustomerOccupation"
+  ],
+  "best_model_name": "Decision Tree",
+  "best_model_accuracy": 0.9958,
+  "cluster_profile": [
+    {
+      "Cluster": 0,
+      "TransactionAmount": 262.49,
+      "CustomerAge": 52.7,
+      "TransactionDuration": 117.53,
+      "LoginAttempts": 1.01,
+      "AccountBalance": 6443.66,
+      "TransactionType": "Credit",
+      "Channel": "Branch",
+      "CustomerOccupation": "Retired"
+    },
+    {
+      "Cluster": 1,
+      "TransactionAmount": 269.11,
+      "CustomerAge": 23.21,
+      "TransactionDuration": 121.03,
+      "LoginAttempts": 1.01,
+      "AccountBalance": 1488.42,
+      "TransactionType": "Debit",
+      "Channel": "Branch",
+      "CustomerOccupation": "Student"
+    },
+    {
+      "Cluster": 2,
+      "TransactionAmount": 247.42,
+      "CustomerAge": 52.22,
+      "TransactionDuration": 118.58,
+      "LoginAttempts": 1.01,
+      "AccountBalance": 6404.17,
+      "TransactionType": "Debit",
+      "Channel": "ATM",
+      "CustomerOccupation": "Doctor"
+    },
+    {
+      "Cluster": 3,
+      "TransactionAmount": 242.95,
+      "CustomerAge": 44.55,
+      "TransactionDuration": 132.5,
+      "LoginAttempts": 3.99,
+      "AccountBalance": 5541.91,
+      "TransactionType": "Debit",
+      "Channel": "Online",
+      "CustomerOccupation": "Doctor"
+    }
+  ],
+  "cluster_labels": {
+    "0": "Senior Mapan",
+    "1": "Muda / Pelajar",
+    "2": "Profesional Mainstream",
+    "3": "Login Attempts Tinggi"
+  }
+}
