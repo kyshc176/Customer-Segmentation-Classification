@@ -278,20 +278,34 @@ if page == "📊 Overview & EDA":
     # Menggunakan Tabs untuk Grafik agar tidak terlalu panjang ke bawah
     tab1, tab2, tab3 = st.tabs(["🧩 Distribusi Segmen", "💰 Keuangan & Transaksi", "📋 Data Lengkap"])
     
-    with tab1:
+   with tab1:
         col1, col2 = st.columns(2)
         with col1:
             seg_count = filtered["Segment_Nama"].value_counts().reset_index()
             seg_count.columns = ["Segmen", "Jumlah"]
-            fig1 = px.pie(seg_count, hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
+            # PERBAIKAN: Menambahkan names="Segmen", values="Jumlah", dan title
+            fig1 = px.pie(
+                seg_count, 
+                names="Segmen", 
+                values="Jumlah", 
+                title="Proporsi Segmen Nasabah",
+                hole=0.4, 
+                color_discrete_sequence=px.colors.qualitative.Pastel
+            )
             fig1.update_traces(textinfo="percent+label", textposition="inside")
             st.plotly_chart(fig1, use_container_width=True)
             
         with col2:
-            fig2 = px.histogram(filtered, x="CustomerAge", color="Segment_Nama", nbins=20, title="Distribusi Usia Berdasarkan Segmen", barmode="overlay")
+            fig2 = px.histogram(
+                filtered, 
+                x="CustomerAge", 
+                color="Segment_Nama", 
+                nbins=20, 
+                title="Distribusi Usia Berdasarkan Segmen", 
+                barmode="overlay"
+            )
             fig2.update_traces(opacity=0.75)
             st.plotly_chart(fig2, use_container_width=True)
-
     with tab2:
         col3, col4 = st.columns(2)
         with col3:
