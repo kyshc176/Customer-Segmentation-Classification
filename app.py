@@ -273,7 +273,7 @@ if page == "📊 Overview & EDA":
         m3.metric("Rata-rata Saldo", f"Rp {filtered['AccountBalance'].mean():,.0f}")
         m4.metric("Avg. Percobaan Login", f"{filtered['LoginAttempts'].mean():.1f}x")
 
-   st.divider()
+    st.divider()
 
     # Menggunakan Tabs untuk Grafik agar tidak terlalu panjang ke bawah
     tab1, tab2, tab3 = st.tabs(["🧩 Distribusi Segmen", "💰 Keuangan & Transaksi", "📋 Data Lengkap"])
@@ -283,13 +283,11 @@ if page == "📊 Overview & EDA":
         with col1:
             seg_count = filtered["Segment_Nama"].value_counts().reset_index()
             seg_count.columns = ["Segmen", "Jumlah"]
-            
-            # Perbaikan Pie Chart
             fig1 = px.pie(
                 seg_count, 
                 names="Segmen", 
-                values="Jumlah", 
-                title="Proporsi Segmen Nasabah",
+                values="Jumlah",
+                title="Proporsi Segmen Nasabah", 
                 hole=0.4, 
                 color_discrete_sequence=px.colors.qualitative.Pastel
             )
@@ -297,14 +295,7 @@ if page == "📊 Overview & EDA":
             st.plotly_chart(fig1, use_container_width=True)
             
         with col2:
-            fig2 = px.histogram(
-                filtered, 
-                x="CustomerAge", 
-                color="Segment_Nama", 
-                nbins=20, 
-                title="Distribusi Usia Berdasarkan Segmen", 
-                barmode="overlay"
-            )
+            fig2 = px.histogram(filtered, x="CustomerAge", color="Segment_Nama", nbins=20, title="Distribusi Usia Berdasarkan Segmen", barmode="overlay")
             fig2.update_traces(opacity=0.75)
             st.plotly_chart(fig2, use_container_width=True)
 
@@ -323,6 +314,8 @@ if page == "📊 Overview & EDA":
     with tab3:
         st.dataframe(filtered.head(500), use_container_width=True, hide_index=True)
         st.download_button("⬇️ Export Data Filtered (CSV)", data=filtered.to_csv(index=False), file_name="data_segmentasi.csv", mime="text/csv")
+
+
 # ============================================================
 # HALAMAN 2 — PREDIKSI INDIVIDUAL
 # ============================================================
