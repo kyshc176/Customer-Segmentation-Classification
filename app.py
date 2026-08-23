@@ -283,7 +283,7 @@ if page == "📊 Overview & EDA":
         with col1:
             seg_count = filtered["Segment_Nama"].value_counts().reset_index()
             seg_count.columns = ["Segmen", "Jumlah"]
-            fig1 = px.pie(seg_count, names="Segmen", values="Jumlah", title="Proporsi Segmen Nasabah", hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
+            fig1 = px.pie(seg_count, hole=0.4, color_discrete_sequence=px.colors.qualitative.Pastel)
             fig1.update_traces(textinfo="percent+label", textposition="inside")
             st.plotly_chart(fig1, use_container_width=True)
             
