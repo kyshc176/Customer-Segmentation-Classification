@@ -477,8 +477,8 @@ elif page == "📁 Prediksi Batch":
 # HALAMAN 4 — MODEL INSIGHT
 # ============================================================
 elif page == "📈 Model Insight":
-    st.title("🧠 Cara Kerja Model (XAI)")
-    st.markdown("Memahami alasan mengapa model mengelompokkan nasabah ke segmen tertentu (Explainable AI).")
+    st.title("🧠 Cara Kerja Model")
+    st.markdown("Memahami alasan mengapa model mengelompokkan nasabah ke segmen tertentu.")
 
     if not artifacts_loaded: st.stop()
 
