@@ -273,17 +273,18 @@ if page == "📊 Overview & EDA":
         m3.metric("Rata-rata Saldo", f"Rp {filtered['AccountBalance'].mean():,.0f}")
         m4.metric("Avg. Percobaan Login", f"{filtered['LoginAttempts'].mean():.1f}x")
 
-    st.divider()
+   st.divider()
 
     # Menggunakan Tabs untuk Grafik agar tidak terlalu panjang ke bawah
     tab1, tab2, tab3 = st.tabs(["🧩 Distribusi Segmen", "💰 Keuangan & Transaksi", "📋 Data Lengkap"])
     
-   with tab1:
+    with tab1:
         col1, col2 = st.columns(2)
         with col1:
             seg_count = filtered["Segment_Nama"].value_counts().reset_index()
             seg_count.columns = ["Segmen", "Jumlah"]
-            # PERBAIKAN: Menambahkan names="Segmen", values="Jumlah", dan title
+            
+            # Perbaikan Pie Chart
             fig1 = px.pie(
                 seg_count, 
                 names="Segmen", 
@@ -306,6 +307,7 @@ if page == "📊 Overview & EDA":
             )
             fig2.update_traces(opacity=0.75)
             st.plotly_chart(fig2, use_container_width=True)
+
     with tab2:
         col3, col4 = st.columns(2)
         with col3:
@@ -321,8 +323,6 @@ if page == "📊 Overview & EDA":
     with tab3:
         st.dataframe(filtered.head(500), use_container_width=True, hide_index=True)
         st.download_button("⬇️ Export Data Filtered (CSV)", data=filtered.to_csv(index=False), file_name="data_segmentasi.csv", mime="text/csv")
-
-
 # ============================================================
 # HALAMAN 2 — PREDIKSI INDIVIDUAL
 # ============================================================
