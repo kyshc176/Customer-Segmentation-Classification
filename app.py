@@ -291,7 +291,7 @@ if page == "📊 Overview & EDA":
                 hole=0.4, 
                 color_discrete_sequence=px.colors.qualitative.Pastel
             )
-            fig1.update_traces(textinfo="percent+label", textposition="inside")
+            fig1.update_traces(textinfo="percent", textposition="inside")
             st.plotly_chart(fig1, use_container_width=True)
             
         with col2:
